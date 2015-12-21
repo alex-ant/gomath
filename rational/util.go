@@ -17,11 +17,11 @@ func (ev *Rational) Simplify() {
 	n := big.NewInt(currentNumerator)
 	d := big.NewInt(currentDenominator)
 
-	gcd := new(big.Int).GCD(nil, nil, n, d)
+	gcd := new(big.Int).GCD(nil, nil, n, d).Int64()
 
-	if gcd.Int64() > 1 {
-		ev.numerator /= gcd.Int64()
-		ev.denominator /= gcd.Int64()
+	if gcd > 1 {
+		ev.numerator /= gcd
+		ev.denominator /= gcd
 	}
 }
 
