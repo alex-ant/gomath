@@ -1,0 +1,111 @@
+package rational
+
+// Rational stores a rational value.
+type Rational struct {
+	numerator   int64
+	denominator int64
+}
+
+// NewRational returns new rational number representation.
+func NewRational(n, d int64) (ev Rational) {
+	return Rational{
+		numerator:   n,
+		denominator: d,
+	}
+}
+
+// Divide divides a rational value by the provided one.
+func (ev Rational) Divide(e Rational) (nv Rational) {
+	newNumerator := ev.numerator * e.denominator
+	newDenominator := ev.denominator * e.numerator
+	if newNumerator == newDenominator {
+		nv = NewRational(1, 1)
+	} else {
+		solveNegatives(&newNumerator, &newDenominator)
+		nv = NewRational(newNumerator, newDenominator)
+		nv.Simplify()
+	}
+
+	return
+}
+
+// DivideByNum divides a rational value by the provided integer.
+func (ev Rational) DivideByNum(i int64) Rational {
+	return ev.Divide(NewRational(i, 1))
+}
+
+// Multiply multiplies a rational value by provided one.
+func (ev Rational) Multiply(e Rational) (nv Rational) {
+	newNumerator := ev.numerator * e.numerator
+	if newNumerator != 0 {
+		newDenominator := ev.denominator * e.denominator
+		if newNumerator == newDenominator {
+			nv = NewRational(1, 1)
+		} else {
+			solveNegatives(&newNumerator, &newDenominator)
+			nv = NewRational(newNumerator, newDenominator)
+			nv.Simplify()
+		}
+	}
+	return
+}
+
+// MultiplyByNum multiplies a rational value by the provided integer.
+func (ev Rational) MultiplyByNum(i int64) Rational {
+	return ev.Multiply(NewRational(i, 1))
+}
+
+// Add adds the provided rational value to an existing one.
+func (ev Rational) Add(e Rational) (nv Rational) {
+	newNumerator := ev.numerator*e.denominator + e.numerator*ev.denominator
+	if newNumerator != 0 {
+		newDenominator := ev.denominator * e.denominator
+		if newNumerator == newDenominator {
+			nv = NewRational(1, 1)
+		} else {
+			solveNegatives(&newNumerator, &newDenominator)
+			nv = NewRational(newNumerator, newDenominator)
+			nv.Simplify()
+		}
+	}
+	return
+}
+
+// AddNum adds the provided integer to an existing rational number.
+func (ev Rational) AddNum(i int64) Rational {
+	return ev.Add(NewRational(i, 1))
+}
+
+// Subtract subtracts the provided rational value from an existing one.
+func (ev Rational) Subtract(e Rational) (nv Rational) {
+	newNumerator := ev.numerator*e.denominator - e.numerator*ev.denominator
+	if newNumerator != 0 {
+		newDenominator := ev.denominator * e.denominator
+		if newNumerator == newDenominator {
+			nv = NewRational(1, 1)
+		} else {
+			solveNegatives(&newNumerator, &newDenominator)
+			nv = NewRational(newNumerator, newDenominator)
+			nv.Simplify()
+		}
+	}
+	return
+}
+
+// SubtractNum subtracts the provided integer from an existing rational number.
+func (ev Rational) SubtractNum(i int64) Rational {
+	return ev.Subtract(NewRational(i, 1))
+}
+
+// GetRationalMatrix converts int64 matrix into Rational matrix.
+func GetRationalMatrix(m [][]int64) (m2 [][]Rational) {
+	m2 = make([][]Rational, len(m))
+	for i, iv := range m {
+		mr := make([]Rational, len(m[i]))
+		for j, jv := range iv {
+			mr[j] = NewRational(jv, 1)
+		}
+		m2[i] = mr
+	}
+	return
+}
