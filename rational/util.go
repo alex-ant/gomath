@@ -35,6 +35,16 @@ func (ev Rational) Get() (numerator, denominator int64) {
 	return ev.numerator, ev.denominator
 }
 
+// GetNumerator returns a numerator.
+func (ev Rational) GetNumerator() int64 {
+	return ev.numerator
+}
+
+// GetDenominator returns a denominator.
+func (ev Rational) GetDenominator() int64 {
+	return ev.denominator
+}
+
 // IsNull determines whether the value is zero.
 func (ev Rational) IsNull() (n bool) {
 	if ev.numerator == 0 && ev.denominator == 0 {
