@@ -47,7 +47,7 @@ func (ev Rational) GetDenominator() int64 {
 
 // IsNull determines whether the value is zero.
 func (ev Rational) IsNull() (n bool) {
-	if ev.numerator == 0 && ev.denominator == 0 {
+	if ev.numerator == 0 {
 		n = true
 	}
 	return

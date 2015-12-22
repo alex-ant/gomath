@@ -50,7 +50,6 @@ func (ev Rational) Divide(e Rational) (nv Rational) {
 		nv = New(newNumerator, newDenominator)
 		nv.Simplify()
 	}
-
 	return
 }
 
@@ -71,6 +70,8 @@ func (ev Rational) Multiply(e Rational) (nv Rational) {
 			nv = New(newNumerator, newDenominator)
 			nv.Simplify()
 		}
+	} else {
+		nv = New(0, 1)
 	}
 	return
 }
@@ -92,6 +93,8 @@ func (ev Rational) Add(e Rational) (nv Rational) {
 			nv = New(newNumerator, newDenominator)
 			nv.Simplify()
 		}
+	} else {
+		nv = New(0, 1)
 	}
 	return
 }
@@ -113,6 +116,8 @@ func (ev Rational) Subtract(e Rational) (nv Rational) {
 			nv = New(newNumerator, newDenominator)
 			nv.Simplify()
 		}
+	} else {
+		nv = New(0, 1)
 	}
 	return
 }
