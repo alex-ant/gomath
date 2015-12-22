@@ -10,7 +10,7 @@ func (ev Rational) GreaterThan(e Rational) bool {
 
 // GreaterThanNum returns true if a rational is greater than the passed integer.
 func (ev Rational) GreaterThanNum(i int64) bool {
-	return ev.GreaterThan(NewRational(i, 1))
+	return ev.GreaterThan(New(i, 1))
 }
 
 // LessThan returns true if a rational is less than the passed one.
@@ -23,5 +23,5 @@ func (ev Rational) LessThan(e Rational) bool {
 
 // LessThanNum returns true if a rational is less than the passed integer.
 func (ev Rational) LessThanNum(i int64) bool {
-	return ev.LessThan(NewRational(i, 1))
+	return ev.LessThan(New(i, 1))
 }
