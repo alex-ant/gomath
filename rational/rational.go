@@ -1,5 +1,11 @@
 package rational
 
+import (
+	"math"
+	"strconv"
+	"strings"
+)
+
 // Rational stores a rational value.
 type Rational struct {
 	numerator   int64
@@ -12,6 +18,25 @@ func New(n, d int64) (ev Rational) {
 		numerator:   n,
 		denominator: d,
 	}
+}
+
+// NewFromFloat returns new rational number representation retrieved from float64.
+func NewFromFloat(f float64) (ev Rational, err error) {
+	d, _ := math.Modf(f)
+
+	fStr := strings.Split(strconv.FormatFloat(f, 'f', -1, 64), ".")[1]
+
+	var numerator int64
+	numerator, err = strconv.ParseInt(fStr, 10, 64)
+	if err != nil {
+		return
+	}
+	denominator := int64(math.Pow(10, float64(len(fStr))))
+
+	ev = New(denominator*int64(d)+numerator, denominator)
+	ev.Simplify()
+
+	return
 }
 
 // Divide divides a rational value by the provided one.
