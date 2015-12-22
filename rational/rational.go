@@ -121,16 +121,3 @@ func (ev Rational) Subtract(e Rational) (nv Rational) {
 func (ev Rational) SubtractNum(i int64) Rational {
 	return ev.Subtract(New(i, 1))
 }
-
-// GetRationalMatrix converts int64 matrix into Rational matrix.
-func GetRationalMatrix(m [][]int64) (m2 [][]Rational) {
-	m2 = make([][]Rational, len(m))
-	for i, iv := range m {
-		mr := make([]Rational, len(m[i]))
-		for j, jv := range iv {
-			mr[j] = New(jv, 1)
-		}
-		m2[i] = mr
-	}
-	return
-}
