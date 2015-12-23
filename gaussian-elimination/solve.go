@@ -10,7 +10,7 @@ import (
 
 // SolveGaussian solves the system of linear equations via The Gaussian Elimination.
 func SolveGaussian(eqM [][]rational.Rational, printTriangularForm bool) (res [][]rational.Rational, err error) {
-	if len(eqM) > len(eqM[0]) {
+	if len(eqM) > len(eqM[0])-1 {
 		err = errors.New("the number of equations can not be greater than the number of variables")
 		return
 	}
