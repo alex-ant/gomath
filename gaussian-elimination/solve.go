@@ -70,6 +70,15 @@ func SolveGaussian(eqM [][]rational.Rational) (res [][]rational.Rational, err er
 		}
 	}
 
+	/*for i := len(resultEqM) - 1; i >= 0; i-- {
+		var str string
+		for _, jv := range resultEqM[i] {
+			str += strconv.FormatFloat(jv.Float64(), 'f', 2, 64) + ","
+		}
+		str = str[:len(str)-1]
+		fmt.Println(str)
+	}*/
+
 	// Calculating variables.
 	res = make([][]rational.Rational, len(eqM[0])-1)
 	if firstNonZeroIndex(resultEqM[0]) == len(resultEqM[0])-2 {
