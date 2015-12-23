@@ -42,7 +42,7 @@ func SolveGaussian(eqM [][]rational.Rational, printTriangularForm bool) (res [][
 		}
 	}
 
-	// Removing empty lines.
+	// Removing empty lines and inverting the matrix.
 	var resultEqM [][]rational.Rational
 	for i := len(eqM) - 1; i >= 0; i-- {
 		if !rational.RationalsAreNull(eqM[i]) {
