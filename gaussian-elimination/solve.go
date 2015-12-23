@@ -3,12 +3,13 @@ package gaussian
 import (
 	"errors"
 	"fmt"
+	"strconv"
 
 	"github.com/alex-ant/gomath/rational"
 )
 
 // SolveGaussian solves the system of linear equations via The Gaussian Elimination.
-func SolveGaussian(eqM [][]rational.Rational) (res [][]rational.Rational, err error) {
+func SolveGaussian(eqM [][]rational.Rational, printTriangularForm bool) (res [][]rational.Rational, err error) {
 	if len(eqM) > len(eqM[0]) {
 		err = errors.New("the number of equations can not be greater than the number of variables")
 		return
@@ -74,6 +75,17 @@ func SolveGaussian(eqM [][]rational.Rational) (res [][]rational.Rational, err er
 					resultEqM[i][j] = firstLine[j].Multiply(mult).Add(jv)
 				}
 			}
+		}
+	}
+
+	if printTriangularForm {
+		for i := len(resultEqM) - 1; i >= 0; i-- {
+			var str string
+			for _, jv := range resultEqM[i] {
+				str += strconv.FormatFloat(jv.Float64(), 'f', 2, 64) + ","
+			}
+			str = str[:len(str)-1]
+			fmt.Println(str)
 		}
 	}
 
