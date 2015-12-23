@@ -120,6 +120,11 @@ func SolveGaussian(eqM [][]rational.Rational, printTriangularForm bool) (res [][
 		}
 	}
 
+	// Simplifying result.
+	for i, v := range res {
+		res[i] = rational.SimplifyLine(v)
+	}
+
 	return
 }
 
