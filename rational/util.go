@@ -1,6 +1,10 @@
 package rational
 
-import "math/big"
+import (
+	"math/big"
+
+	"github.com/alex-ant/gomath/misc"
+)
 
 // Simplify simplifies the rational number by dividing it's numerator and
 // denominator by the GCD.
@@ -23,6 +27,25 @@ func (ev *Rational) Simplify() {
 		ev.numerator /= gcd
 		ev.denominator /= gcd
 	}
+}
+
+// SimplifyLine miltiplies all the rationals in the line by the
+// Greatest Common Delimiter if one is greater than 1.
+func SimplifyLine(line []Rational) []Rational {
+	var denominators []int64
+	for _, v := range line {
+		denominators = append(denominators, v.GetDenominator())
+	}
+
+	gcd := misc.MultiGCD(denominators)
+
+	if gcd > 1 {
+		for i, v := range line {
+			line[i] = v.MultiplyByNum(gcd)
+		}
+	}
+
+	return line
 }
 
 // Float64 returns the float64 representation of a rational number.
