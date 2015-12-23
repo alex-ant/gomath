@@ -30,7 +30,7 @@ func (ev *Rational) Simplify() {
 }
 
 // SimplifyLine miltiplies all the rationals in the line by the
-// Greatest Common Delimiter if one is greater than 1.
+// Greatest Common Delimiter of denominators if one is greater than 1.
 func SimplifyLine(line []Rational) []Rational {
 	var denominators []int64
 	for _, v := range line {
