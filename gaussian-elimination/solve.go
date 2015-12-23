@@ -8,7 +8,7 @@ import (
 )
 
 // SolveGaussian solves the system of linear equations via The Gaussian Elimination.
-func SolveGaussian(eqM [][]rational.Rational) (res [][]rational.Rational, preciseResult bool, err error) {
+func SolveGaussian(eqM [][]rational.Rational) (res [][]rational.Rational, err error) {
 	if len(eqM) > len(eqM[0]) {
 		err = errors.New("the number of equations can not be greater than the number of variables")
 		return
@@ -19,8 +19,6 @@ func SolveGaussian(eqM [][]rational.Rational) (res [][]rational.Rational, precis
 		err = fmt.Errorf("provided matrix contains duplicate lines (%d and %d)", i+1, j+1)
 		return
 	}
-
-	preciseResult = true
 
 	for i := 0; i < len(eqM)-1; i++ {
 		eqM = sortMatrix(eqM, i)
@@ -51,6 +49,16 @@ func SolveGaussian(eqM [][]rational.Rational) (res [][]rational.Rational, precis
 		}
 	}
 
+	getFirstNonZeroIndex := func(sl []rational.Rational) (index int) {
+		for i, v := range sl {
+			if v.GetNumerator() != 0 {
+				index = i
+				return
+			}
+		}
+		return
+	}
+
 	// Back substitution.
 	for z := 0; z < len(resultEqM)-1; z++ {
 		var processIndex int
@@ -68,8 +76,6 @@ func SolveGaussian(eqM [][]rational.Rational) (res [][]rational.Rational, precis
 			}
 		}
 	}
-
-	preciseResult = resultIsPrecise(resultEqM)
 
 	// Calculating variables.
 	res = make([][]rational.Rational, len(eqM[0])-1)
@@ -152,31 +158,6 @@ func sortMatrix(m [][]rational.Rational, initRow int) (m2 [][]rational.Rational)
 	}
 
 	return
-}
-
-func getFirstNonZeroIndex(sl []rational.Rational) (index int) {
-	for i, v := range sl {
-		if v.GetNumerator() != 0 {
-			index = i
-			return
-		}
-	}
-	return
-}
-
-func resultIsPrecise(resultEqM [][]rational.Rational) bool {
-	for i := len(resultEqM) - 1; i >= 0; i-- {
-		fnz := getFirstNonZeroIndex(resultEqM[i])
-		for j, jv := range resultEqM[i] {
-			if len(resultEqM)-1-i == j && jv.GetNumerator() == 0 {
-				return false
-			}
-			if i == 0 && j > fnz && jv.GetNumerator() == 0 {
-				return false
-			}
-		}
-	}
-	return true
 }
 
 func containsDuplicatesLines(eqM [][]rational.Rational) (contains bool, l1, l2 int) {
