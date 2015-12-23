@@ -6,7 +6,7 @@ import (
 	"github.com/alex-ant/gomath/rational"
 )
 
-// SolveGaussian solves the system of linear equations via The Gaussian method.
+// SolveGaussian solves the system of linear equations via The Gaussian Elimination.
 func SolveGaussian(eqM [][]rational.Rational) (res []rational.Rational, err error) {
 	if len(eqM) > len(eqM[0]) {
 		err = errors.New("the number of equations can not be greater than the number of variables")
