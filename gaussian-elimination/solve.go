@@ -7,7 +7,7 @@ import (
 )
 
 // SolveGaussian solves the system of linear equations via The Gaussian Elimination.
-func SolveGaussian(eqM [][]rational.Rational) (res []rational.Rational, err error) {
+func SolveGaussian(eqM [][]rational.Rational) (res [][]rational.Rational, err error) {
 	if len(eqM) > len(eqM[0]) {
 		err = errors.New("the number of equations can not be greater than the number of variables")
 		return
@@ -71,18 +71,35 @@ func SolveGaussian(eqM [][]rational.Rational) (res []rational.Rational, err erro
 	}
 
 	// Calculating variables.
-	res = make([]rational.Rational, len(eqM[0])-1)
-
+	res = make([][]rational.Rational, len(eqM[0])-1)
 	if firstNonZeroIndex(resultEqM[0]) == len(resultEqM[0])-2 {
-		for i, v := range resultEqM {
-			res[len(res)-1-i] = v[len(v)-1].Divide(v[len(resultEqM)-1-i])
+		// All the variables have been found.
+		for i, iv := range resultEqM {
+			index := len(res) - 1 - i
+			res[index] = append(res[index], iv[len(iv)-1].Divide(iv[len(resultEqM)-1-i]))
+		}
+	} else {
+		// Some variables remained unknown.
+		var unknownStart, unknownEnd int
+		for i, iv := range resultEqM {
+			fnz := firstNonZeroIndex(iv)
+			var firstRes []rational.Rational
+			firstRes = append(firstRes, iv[len(iv)-1].Divide(iv[fnz]))
+			if i == 0 {
+				unknownStart = fnz + 1
+				unknownEnd = len(iv) - 2
+				for j := unknownEnd; j >= unknownStart; j-- {
+					res[j] = []rational.Rational{rational.New(0, 0)}
+					firstRes = append(firstRes, iv[j].Divide(iv[fnz]))
+				}
+			} else {
+				for j := unknownEnd; j >= unknownStart; j-- {
+					firstRes = append(firstRes, iv[j].Divide(iv[fnz]))
+				}
+			}
+			res[fnz] = firstRes
 		}
 	}
-
-	/*fmt.Println("================ Aaaa")
-	for _, v := range resultEqM {
-		fmt.Println(v)
-	}*/
 
 	return
 }
