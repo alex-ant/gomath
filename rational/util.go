@@ -45,6 +45,14 @@ func (ev Rational) GetDenominator() int64 {
 	return ev.denominator
 }
 
+// GetModule returns rational number's module.
+func (ev Rational) GetModule() Rational {
+	if ev.LessThanNum(0) {
+		ev = ev.MultiplyByNum(-1)
+	}
+	return ev
+}
+
 // IsNull determines whether the value is zero.
 func (ev Rational) IsNull() (n bool) {
 	if ev.numerator == 0 {
