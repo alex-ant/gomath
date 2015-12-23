@@ -2,16 +2,25 @@ package gaussian
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/alex-ant/gomath/rational"
 )
 
 // SolveGaussian solves the system of linear equations via The Gaussian Elimination.
-func SolveGaussian(eqM [][]rational.Rational) (res [][]rational.Rational, err error) {
+func SolveGaussian(eqM [][]rational.Rational) (res [][]rational.Rational, preciseResult bool, err error) {
 	if len(eqM) > len(eqM[0]) {
 		err = errors.New("the number of equations can not be greater than the number of variables")
 		return
 	}
+
+	dl, i, j := containsDuplicatesLines(eqM)
+	if dl {
+		err = fmt.Errorf("provided matrix contains duplicate lines (%d and %d)", i+1, j+1)
+		return
+	}
+
+	preciseResult = true
 
 	for i := 0; i < len(eqM)-1; i++ {
 		eqM = sortMatrix(eqM, i)
@@ -42,16 +51,6 @@ func SolveGaussian(eqM [][]rational.Rational) (res [][]rational.Rational, err er
 		}
 	}
 
-	firstNonZeroIndex := func(sl []rational.Rational) (index int) {
-		for i, v := range sl {
-			if v.GetNumerator() != 0 {
-				index = i
-				return
-			}
-		}
-		return
-	}
-
 	// Back substitution.
 	for z := 0; z < len(resultEqM)-1; z++ {
 		var processIndex int
@@ -59,7 +58,7 @@ func SolveGaussian(eqM [][]rational.Rational) (res [][]rational.Rational, err er
 		for i := z; i < len(resultEqM); i++ {
 			v := resultEqM[i]
 			if i == z {
-				processIndex = firstNonZeroIndex(v)
+				processIndex = getFirstNonZeroIndex(v)
 				firstLine = v
 			} else {
 				mult := v[processIndex].Divide(firstLine[processIndex]).MultiplyByNum(-1)
@@ -70,18 +69,11 @@ func SolveGaussian(eqM [][]rational.Rational) (res [][]rational.Rational, err er
 		}
 	}
 
-	/*for i := len(resultEqM) - 1; i >= 0; i-- {
-		var str string
-		for _, jv := range resultEqM[i] {
-			str += strconv.FormatFloat(jv.Float64(), 'f', 2, 64) + ","
-		}
-		str = str[:len(str)-1]
-		fmt.Println(str)
-	}*/
+	preciseResult = resultIsPrecise(resultEqM)
 
 	// Calculating variables.
 	res = make([][]rational.Rational, len(eqM[0])-1)
-	if firstNonZeroIndex(resultEqM[0]) == len(resultEqM[0])-2 {
+	if getFirstNonZeroIndex(resultEqM[0]) == len(resultEqM[0])-2 {
 		// All the variables have been found.
 		for i, iv := range resultEqM {
 			index := len(res) - 1 - i
@@ -91,7 +83,7 @@ func SolveGaussian(eqM [][]rational.Rational) (res [][]rational.Rational, err er
 		// Some variables remained unknown.
 		var unknownStart, unknownEnd int
 		for i, iv := range resultEqM {
-			fnz := firstNonZeroIndex(iv)
+			fnz := getFirstNonZeroIndex(iv)
 			var firstRes []rational.Rational
 			firstRes = append(firstRes, iv[len(iv)-1].Divide(iv[fnz]))
 			if i == 0 {
@@ -159,5 +151,52 @@ func sortMatrix(m [][]rational.Rational, initRow int) (m2 [][]rational.Rational)
 		}
 	}
 
+	return
+}
+
+func getFirstNonZeroIndex(sl []rational.Rational) (index int) {
+	for i, v := range sl {
+		if v.GetNumerator() != 0 {
+			index = i
+			return
+		}
+	}
+	return
+}
+
+func resultIsPrecise(resultEqM [][]rational.Rational) bool {
+	for i := len(resultEqM) - 1; i >= 0; i-- {
+		fnz := getFirstNonZeroIndex(resultEqM[i])
+		for j, jv := range resultEqM[i] {
+			if len(resultEqM)-1-i == j && jv.GetNumerator() == 0 {
+				return false
+			}
+			if i == 0 && j > fnz && jv.GetNumerator() == 0 {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+func containsDuplicatesLines(eqM [][]rational.Rational) (contains bool, l1, l2 int) {
+	for i := 0; i < len(eqM); i++ {
+		for j := i + 1; j < len(eqM); j++ {
+			var equalElements int
+			for k := 0; k < len(eqM[i]); k++ {
+				if eqM[i][k] == eqM[j][k] {
+					equalElements++
+				} else {
+					break
+				}
+			}
+			if equalElements == len(eqM[i]) {
+				contains = true
+				l1 = i
+				l2 = j
+				return
+			}
+		}
+	}
 	return
 }
