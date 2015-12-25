@@ -236,11 +236,11 @@ func TestAddNum(t *testing.T) {
 		t.Error("failed to add a positive rational to positive integer")
 	}
 
-	if r2.AddNum(2) != New(-3, 2) {
+	if r2.AddNum(2) != New(3, 2) {
 		t.Error("failed to add a rational with negative numerator to positive integer")
 	}
 
-	if r3.AddNum(2) != New(-3, 2) {
+	if r3.AddNum(2) != New(3, 2) {
 		t.Error("failed to add a rational with negative denominator to positive integer")
 	}
 
