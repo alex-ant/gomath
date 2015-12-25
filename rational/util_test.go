@@ -38,6 +38,9 @@ func TestSimplifyLine(t *testing.T) {
 		New(2, 8),
 		New(3, 16),
 		New(4, 4),
+		New(-4, 4),
+		New(4, -4),
+		New(-4, -4),
 	}
 
 	r2 := SimplifyLine(r)
@@ -46,6 +49,9 @@ func TestSimplifyLine(t *testing.T) {
 		New(1, 1),
 		New(1, 1),
 		New(3, 4),
+		New(4, 1),
+		New(-4, 1),
+		New(-4, 1),
 		New(4, 1),
 	}
 
@@ -141,5 +147,38 @@ func TestGetModule(t *testing.T) {
 
 	if m4 != m0 {
 		t.Error("failed to get module of a rational with negative numerator and denominator")
+	}
+}
+
+func TestIsNull(t *testing.T) {
+	r1 := New(0, 1)
+	r2 := New(1, 1)
+
+	if !r1.IsNull() || r2.IsNull() {
+		t.Error("failed to determine whether a rational is null")
+	}
+}
+
+func TestRationalsAreNull(t *testing.T) {
+	r1 := []Rational{
+		New(0, 1),
+		New(0, 1),
+		New(0, 1),
+		New(0, 1),
+		New(0, 1),
+	}
+
+	r2 := []Rational{
+		New(1, 4),
+		New(2, 8),
+		New(3, 16),
+		New(4, 4),
+		New(-4, 4),
+		New(4, -4),
+		New(-4, -4),
+	}
+
+	if !RationalsAreNull(r1) || RationalsAreNull(r2) {
+		t.Error("failed to determine whether a rationals' slice is null")
 	}
 }
