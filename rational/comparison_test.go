@@ -100,7 +100,7 @@ func TestLessThan(t *testing.T) {
 func TestLessThanNum(t *testing.T) {
 	r1 := New(7, 4)
 	r2 := New(-5, 4)
-	r3 := New(1, -4)
+	r3 := New(5, -4)
 	r4 := New(-7, -4)
 
 	if !r1.LessThanNum(2) || r1.GreaterThanNum(2) {
@@ -111,7 +111,7 @@ func TestLessThanNum(t *testing.T) {
 		t.Error("failed to compare if a rational with negative numerator is less than a negative integer")
 	}
 
-	if !r3.LessThanNum(-2) || r3.GreaterThanNum(-2) {
+	if !r3.LessThanNum(-1) || r3.GreaterThanNum(-1) {
 		t.Error("failed to compare if a rational with negative denominator is less than a negative integer")
 	}
 
