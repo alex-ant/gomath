@@ -9,13 +9,13 @@ import (
 // Simplify simplifies the rational number by dividing it's numerator and
 // denominator by the GCD.
 func (ev *Rational) Simplify() {
-	currentNumerator := ev.numerator
-	currentDenominator := ev.denominator
-
-	if currentDenominator < 0 {
+	if ev.denominator < 0 {
 		ev.numerator *= -1
 		ev.denominator *= -1
 	}
+
+	currentNumerator := ev.numerator
+	currentDenominator := ev.denominator
 
 	if currentNumerator < 0 && currentDenominator > 0 {
 		currentNumerator *= -1
