@@ -78,6 +78,7 @@ func (ev Rational) GetDenominator() int64 {
 
 // GetModule returns rational number's module.
 func (ev Rational) GetModule() Rational {
+	solveNegatives(&ev.numerator, &ev.denominator)
 	if ev.LessThanNum(0) {
 		ev = ev.MultiplyByNum(-1)
 	}
