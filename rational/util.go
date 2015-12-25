@@ -101,7 +101,7 @@ func RationalsAreNull(l []Rational) (isNull bool) {
 }
 
 func solveNegatives(n, d *int64) {
-	if *n < 0 && *d < 0 {
+	if *d < 0 {
 		*n *= -1
 		*d *= -1
 	}
