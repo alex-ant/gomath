@@ -12,7 +12,7 @@ func (ev *Rational) Simplify() {
 	currentNumerator := ev.numerator
 	currentDenominator := ev.denominator
 
-	if currentNumerator < 0 && currentDenominator < 0 {
+	if currentDenominator < 0 {
 		ev.numerator *= -1
 		ev.denominator *= -1
 	}
