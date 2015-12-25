@@ -3,14 +3,14 @@ package rational
 import "testing"
 
 func TestNewFromFloat(t *testing.T) {
-	r1, err := NewFromFloat(1.25)
-	if err != nil {
-		t.Error(err)
+	r1, err1 := NewFromFloat(1.25)
+	if err1 != nil {
+		t.Error(err1)
 	}
 
-	r2, err := NewFromFloat(-1.25)
-	if err != nil {
-		t.Error(err)
+	r2, err2 := NewFromFloat(-1.25)
+	if err2 != nil {
+		t.Error(err2)
 	}
 
 	if r1 != New(5, 4) {
