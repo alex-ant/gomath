@@ -38,7 +38,10 @@ func (ev *Rational) Simplify() {
 // Greatest Common Delimiter of denominators if one is greater than 1.
 func SimplifyLine(line []Rational) []Rational {
 	var denominators []int64
-	for _, v := range line {
+
+	for i, v := range line {
+		solveNegatives(&v.numerator, &v.denominator)
+		line[i] = v
 		denominators = append(denominators, v.GetDenominator())
 	}
 
