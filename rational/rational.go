@@ -33,7 +33,13 @@ func NewFromFloat(f float64) (ev Rational, err error) {
 	}
 	denominator := int64(math.Pow(10, float64(len(fStr))))
 
-	ev = New(denominator*int64(d)+numerator, denominator)
+	var negativeCoef int64 = 1
+	if d < 0 {
+		negativeCoef = -1
+		d *= -1
+	}
+
+	ev = New(negativeCoef*(denominator*int64(d)+numerator), denominator)
 	ev.Simplify()
 
 	return
