@@ -13,7 +13,7 @@ type Rational struct {
 }
 
 // New returns new rational number representation.
-func New(n, d int64) (ev Rational) {
+func New(n, d int64) Rational {
 	return Rational{
 		numerator:   n,
 		denominator: d,
