@@ -2,7 +2,7 @@ package misc
 
 import "math/big"
 
-// MultiGCD returns a Greatest Common Delimiter for all the numbers in the slice.
+// MultiGCD returns the Greatest Common Delimiter for all the numbers in the slice.
 func MultiGCD(line []int64) (gcd int64) {
 	var uniq []int64
 	for _, v := range line {
