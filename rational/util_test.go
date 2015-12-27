@@ -32,41 +32,6 @@ func TestSimplify(t *testing.T) {
 	}
 }
 
-func TestSimplifyLine(t *testing.T) {
-	r := []Rational{
-		New(1, 4),
-		New(2, 8),
-		New(3, 16),
-		New(4, 4),
-		New(-4, 4),
-		New(4, -4),
-		New(-4, -4),
-	}
-
-	r2 := SimplifyLine(r)
-
-	r2Test := []Rational{
-		New(1, 1),
-		New(1, 1),
-		New(3, 4),
-		New(4, 1),
-		New(-4, 1),
-		New(-4, 1),
-		New(4, 1),
-	}
-
-	success := true
-	for i, v := range r2 {
-		if v != r2Test[i] {
-			success = false
-		}
-	}
-
-	if !success {
-		t.Error("failed to simplify line of rationals")
-	}
-}
-
 func TestFloat64(t *testing.T) {
 	r1 := New(7, 8).Float64()
 	r2 := New(-7, 8).Float64()
