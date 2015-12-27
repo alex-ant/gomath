@@ -30,6 +30,14 @@ func (ev *Rational) Simplify() {
 	}
 }
 
+// IsNatural determines whether the rational number is also natural.
+func (ev Rational) IsNatural() bool {
+	if ev.numerator%ev.denominator == 0 {
+		return true
+	}
+	return false
+}
+
 // Float64 returns the float64 representation of a rational number.
 func (ev Rational) Float64() float64 {
 	return float64(ev.numerator) / float64(ev.denominator)
