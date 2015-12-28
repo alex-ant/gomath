@@ -2,7 +2,6 @@ package gaussian
 
 import (
 	"encoding/json"
-	"math"
 	"sync"
 
 	"github.com/alex-ant/gomath/rational"
@@ -24,16 +23,35 @@ func GetAllOptionsInRange(res [][]rational.Rational, min, max int64, natural boo
 	unknowns := len(res[0]) - 1
 
 	comb := make([]int64, unknowns)
-	for i := range comb {
-		comb[i] = min
+
+	combFinal := func() (final bool) {
+		final = true
+		for _, v := range comb {
+			if v != max {
+				final = false
+				break
+			}
+		}
+		return
 	}
 
 	concCh := make(chan bool, 20)
 
 	var resMutex sync.Mutex
 
-	numCombinations := int64(math.Pow(float64(int(max-min+1)), float64(unknowns)))
-	for i := int64(1); i <= numCombinations; i++ {
+	started := true
+
+	for !combFinal() {
+		for k := unknowns - 1; k >= 0; k-- {
+			if comb[k] == max || started {
+				comb[k] = min
+			} else {
+				comb[k]++
+				break
+			}
+		}
+		started = false
+
 		concCh <- true
 		go func(combStr string) {
 			combSl := stringToSlice(combStr)
@@ -68,15 +86,6 @@ func GetAllOptionsInRange(res [][]rational.Rational, min, max int64, natural boo
 			}
 			<-concCh
 		}(sliceToString(comb))
-
-		for k := unknowns - 1; k >= 0; k-- {
-			if comb[k] == max {
-				comb[k] = min
-			} else {
-				comb[k]++
-				break
-			}
-		}
 	}
 
 	for i := 0; i < cap(concCh); i++ {
