@@ -1,5 +1,5 @@
 # gomath
-Extra mathematical algorithms and data types for Golang
+Extra mathematical algorithms and data types for Golang.
 
 ## Packages
 The repository provides the following packages:
@@ -20,7 +20,7 @@ Imagine you have the following expression to solve:
 ![example 1](https://raw.githubusercontent.com/alex-ant/gomath/master/example1.gif)
 
 Here's how to solve it using the rational package:
-```
+```go
 import "github.com/alex-ant/gomath/rational"
 
 // Create a new rational number defining it's numerator and denominator.
