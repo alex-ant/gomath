@@ -1,5 +1,7 @@
 # gomath
+Extra mathematical algorithms and data types for Golang
 
+## Packages
 The repository provides the following packages:
 * [rational](https://github.com/alex-ant/gomath/tree/master/rational)
 * [gaussian](https://github.com/alex-ant/gomath/tree/master/gaussian-elimination)
@@ -9,10 +11,11 @@ Follow the links above to find more about each package.
 
 ## Quick overview
 Even though each package contains its own README, let's consider a few examples for each one here.
+
 #### rational
 The package provides the Rational data type and a kit of corresponding methods to work with rational numbers.
 
-Imagine you have the following expression to solve.
+Imagine you have the following expression to solve:
 
 ![example 1](https://raw.githubusercontent.com/alex-ant/gomath/master/example1.gif)
 
