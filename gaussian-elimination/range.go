@@ -32,7 +32,8 @@ func GetAllOptionsInRange(res [][]rational.Rational, min, max int64, natural boo
 
 	var resMutex sync.Mutex
 
-	for i := int64(1); i <= int64(math.Pow(float64(int(max-min+1)), float64(unknowns))); i++ {
+	numCombinations := int64(math.Pow(float64(int(max-min+1)), float64(unknowns)))
+	for i := int64(1); i <= numCombinations; i++ {
 		concCh <- true
 		go func(combStr string) {
 			combSl := stringToSlice(combStr)
