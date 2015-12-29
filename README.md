@@ -3,11 +3,11 @@ Extra mathematical algorithms and data types for Golang.
 
 ## Packages
 The repository provides the following packages:
-* [rational](https://github.com/alex-ant/gomath/tree/master/rational)
-* [gaussian](https://github.com/alex-ant/gomath/tree/master/gaussian-elimination)
-* [misc](https://github.com/alex-ant/gomath/tree/master/misc)
+* [rational](https://godoc.org/github.com/alex-ant/gomath/rational)
+* [gaussian](https://godoc.org/github.com/alex-ant/gomath/gaussian-elimination)
+* [misc](https://godoc.org/github.com/alex-ant/gomath/misc)
 
-Follow the links above to find more about each package.
+Follow the godoc links above to find more about each package.
 
 ## Quick overview
 Let's consider a few examples for each package here.
