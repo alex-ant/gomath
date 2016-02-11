@@ -30,4 +30,16 @@ func TestFeedAverage(t *testing.T) {
 
 	avg.Feed(float64(4))
 	checkFloatAndRational(7)
+
+	var avgR Average
+
+	avgR.Feed(rational.New(1, 2000))
+	if avgR.GetR() != rational.New(1, 2000) {
+		t.Error("failed to get Rarional average", avgR.GetR())
+	}
+
+	avgR.Feed(rational.New(1, 6000))
+	if avgR.GetR() != rational.New(1, 3000) {
+		t.Error("failed to get Rarional average", avgR.GetR())
+	}
 }
