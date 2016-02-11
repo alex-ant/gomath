@@ -13,12 +13,21 @@ func TestNewFromFloat(t *testing.T) {
 		t.Error(err2)
 	}
 
+	r3, err3 := NewFromFloat(float64(7))
+	if err3 != nil {
+		t.Error(err3)
+	}
+
 	if r1 != New(5, 4) {
 		t.Error("failed to convert a positive float to rational")
 	}
 
 	if r2 != New(-5, 4) {
 		t.Error("failed to convert a negative float to rational")
+	}
+
+	if r3 != New(7, 1) {
+		t.Error("failed to convert a positive float to rational 2")
 	}
 }
 

@@ -24,7 +24,11 @@ func New(n, d int64) Rational {
 func NewFromFloat(f float64) (ev Rational, err error) {
 	d, _ := math.Modf(f)
 
-	fStr := strings.Split(strconv.FormatFloat(f, 'f', -1, 64), ".")[1]
+	fSl := strings.Split(strconv.FormatFloat(f, 'f', -1, 64), ".")
+	fStr := "0"
+	if len(fSl) == 2 {
+		fStr = fSl[1]
+	}
 
 	var numerator int64
 	numerator, err = strconv.ParseInt(fStr, 10, 64)
