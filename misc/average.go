@@ -14,6 +14,18 @@ func (a *Average) Feed(value interface{}) {
 	floatVal, fSuccess := value.(float64)
 	rationalVal, rSuccess := value.(rational.Rational)
 
+	intVal, intSuccess := value.(int)
+	if intSuccess {
+		floatVal = float64(intVal)
+		fSuccess = true
+	}
+
+	int64Val, int64Success := value.(int64)
+	if int64Success {
+		floatVal = float64(int64Val)
+		fSuccess = true
+	}
+
 	var err error
 
 	a.num++

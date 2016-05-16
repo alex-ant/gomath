@@ -22,13 +22,13 @@ func TestFeedAverage(t *testing.T) {
 	avg.Feed(float64(10))
 	checkFloatAndRational(10)
 
-	avg.Feed(float64(8))
+	avg.Feed(int64(8))
 	checkFloatAndRational(9)
 
 	avg.Feed(float64(6))
 	checkFloatAndRational(8)
 
-	avg.Feed(float64(4))
+	avg.Feed(4)
 	checkFloatAndRational(7)
 
 	var avgR Average
